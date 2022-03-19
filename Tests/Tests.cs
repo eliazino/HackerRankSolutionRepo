@@ -58,5 +58,56 @@ namespace Tests {
             int numMove = MergeSort.numMovement;
             Assert.AreEqual(c, new int[] { 1, 5, 6, 11, 12, 14, 15 });
         }
+
+        [TestCase]
+        public void insertAndSortTest() {
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15 };
+            var r = Activities.insertAndSort(a, 6, 3);
+            Assert.AreEqual(r, new int[] { 1, 3, 5, 11, 12, 14, 15 });
+        }
+
+        [TestCase]
+        public void insertAndSortTestII() {
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15 };
+            var r = Activities.insertAndSort(a, 11, 1);
+            Assert.AreEqual(r, new int[] { 1, 1, 5, 6, 12, 14, 15 });
+        }
+
+        [TestCase]
+        public void insertAndSortTestIII() {
+            int[] a = new int[] { 1, 5, 6, 11, 12, 15 };
+            var r = Activities.insertAndSort(a, 14, 16);
+            Assert.AreEqual(r, new int[] { 1, 5, 6, 11, 12, 15, 16 });
+        }
+
+        [TestCase]
+        public void insertAndSortTestIV() {
+            int[] a = new int[] { 1, 5, 11, 12, 14, 15 };
+            var r = Activities.insertAndSort(a, 6, 13);
+            Assert.AreEqual(r, new int[] { 1, 5, 11, 12, 13, 14, 15 });
+        }
+
+        [TestCase]
+        public void medianCal() {
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15 };
+            var r = Activities.median(a);
+            Assert.AreEqual(r, 11);
+        }
+
+        [TestCase]
+        public void medianCalII() {
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15, 67 };
+            var r = Activities.median(a);
+            var expected = (double)((double)(11 + 12) / 2);
+            Assert.AreEqual(r, expected);
+        }
+
+        [TestCase]
+        public void fraudAlertTest() {
+            int[] a = new int[] { 2, 3, 4, 2, 3, 6, 8, 4, 5 };
+            var r = Activities.activityNotifications(new List<int>(a), 5);
+            Assert.AreEqual(r, 2);
+        }
+
     }
 }
