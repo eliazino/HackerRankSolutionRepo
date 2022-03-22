@@ -75,14 +75,14 @@ namespace Tests {
 
         [TestCase]
         public void insertAndSortTestIII() {
-            int[] a = new int[] { 1, 5, 6, 11, 12, 15 };
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15 };
             var r = Activities.insertAndSort(a, 14, 16);
             Assert.AreEqual(r, new int[] { 1, 5, 6, 11, 12, 15, 16 });
         }
 
         [TestCase]
         public void insertAndSortTestIV() {
-            int[] a = new int[] { 1, 5, 11, 12, 14, 15 };
+            int[] a = new int[] { 1, 5, 6, 11, 12, 14, 15 };
             var r = Activities.insertAndSort(a, 6, 13);
             Assert.AreEqual(r, new int[] { 1, 5, 11, 12, 13, 14, 15 });
         }
@@ -109,5 +109,14 @@ namespace Tests {
             Assert.AreEqual(r, 2);
         }
 
+        [TestCase]
+        public void countSort() {
+            int[] a = new int[] { 2, 3, 4, 2, 3, 6, 8, 4, 5 };
+            int[] b = new int[] { 2, 3, 4, 5 };
+            int i = Array.BinarySearch(b, 0, 4, 6);
+            i = ~i;
+            var r = Activities.countSort(a, 8, null, 0, 0);
+            Assert.AreEqual(r.sortedA, new int[] {2, 2, 3, 3, 4, 4, 5, 6, 8});
+        }
     }
 }
