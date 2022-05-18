@@ -2,7 +2,9 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using static HackerRankSolutionRepo.Problems.BinaryTreeProblem;
 
 namespace Tests {
     [TestFixture]
@@ -117,6 +119,97 @@ namespace Tests {
             i = ~i;
             var r = Activities.countSort(a, 8, null, 0, 0);
             Assert.AreEqual(r.sortedA, new int[] {2, 2, 3, 3, 4, 4, 5, 6, 8});
+        }
+
+        [TestCase]
+        public void TestNum2Roman() {
+            var r = Activities.IntToRoman(21);
+            Assert.AreEqual("XXI", r);
+        }
+        [TestCase]
+        public void TestTreeDepth() {            
+            TreeNode node = new TreeNode();
+            node.value = 1;
+            node.depth = 1;
+            node = fillTree(node, 16);
+            int d = BinaryTreeProblem.findMaxDepth(node);
+            Assert.AreEqual(d, 4);
+        }
+        public static TreeNode fillTree(TreeNode tree, int maxValue) {
+            int rightVal = (tree.value + tree.value);
+            int leftVal = rightVal + 1;
+            if (rightVal > maxValue)
+                return tree;
+            tree.right = new TreeNode { value = rightVal };
+            tree.right = fillTree(tree.right, maxValue);
+            if (leftVal <= maxValue) {
+                tree.left = new TreeNode { value = leftVal };
+                tree.left = fillTree(tree.left, maxValue);
+            }
+            return tree;
+        }
+        [TestCase]
+        public void dayweekendTest() {
+            var r = Activities.weekend("29-02");
+            Assert.AreEqual(true, true);
+        }
+
+        [TestCase]
+        public void movieTest() {
+            var r = Activities.movieStack(3, 3, new int[3] { 3, 1, 1 });
+            Assert.AreEqual("2,1,0", r);
+        }
+        [TestCase]
+        public void Linq() {
+            List<Employee> em = new List<Employee> {
+                new Employee{ Company = "TA", Age = 3 },
+                new Employee{ Company = "TJ", Age = 1 },
+                new Employee{ Company = "TA", Age = 4 },
+                new Employee{ Company = "TA", Age = 6 },
+                new Employee{ Company = "TJ", Age = 9 },
+                new Employee{ Company = "TA", Age = 1 },
+                new Employee{ Company = "TA", Age = 2 },
+                new Employee{ Company = "TK", Age = 4 },
+                new Employee{ Company = "TB", Age = 9 },
+                new Employee{ Company = "TK", Age = 7 },
+            };
+            var t = em.Select(emp => emp.Company).Distinct().ToList();
+            var ti = em.Where(emp => emp.Company == "TK" && emp.Age == 7).ToList();
+        }
+
+        [TestCase]
+        public void Ranker() {
+            List<int> em = new List<int> {
+                100, 100, 50, 40, 40, 20, 10
+            };
+            List<int> r = new List<int> {
+                5, 25, 50, 120
+            };
+            var ri = Warmup1.getRanks2(em, r);
+        }
+
+        [TestCase]
+        public void TestPivot() {
+            int[] h = new int[] { 7, 3, 5, 2, 4, 1, 8, 6 };
+            var j = SortingAlgorithms.Pivot(h,0, 7);
+        }
+
+        [TestCase]
+        public void TestQS() {
+            int[] h = new int[] { 1, 2, 3, 5, 6, 7, 8, 9 };
+            var k = SortingAlgorithms.QuickSort(h, 0, 7);
+        }
+        [TestCase]
+        public void TestQSII() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.QuickSort(h, 0, 7);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+        public class Employee {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public int Age { get; set; }
+            public string Company { get; set; }
         }
     }
 }
