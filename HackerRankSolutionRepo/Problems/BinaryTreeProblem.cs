@@ -3,24 +3,127 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace HackerRankSolutionRepo.Problems {
-    public class BinaryTreeProblem {
-        public static int findMaxDepth(TreeNode node) {
-            if (node.left == null && node.right == null)
-                return 0;
-            int l =0, r =0;
-            if (node.left != null) {
-                l = findMaxDepth(node.left);
+    public class BSTImpl {
+        private TreeNode root = null;
+        public void insert(int data) {
+            if(root == null) {
+                root = new TreeNode(data);
+                return;
             }
-            if (node.right != null) {
-                r = findMaxDepth(node.right);
+            root = searchAndInsert(root, data);
+        }
+        private TreeNode searchAndInsert(TreeNode root, int value) {
+            if (root == null)
+                return new TreeNode(value);
+            if(root.value > value) {
+                root.left = searchAndInsert(root.left, value);
+            } else {
+                root.right = searchAndInsert(root.right, value);
             }
-            return l < r ? r+1 : l+1;
+            return root;
+        }
+        public List<int> preOrderTraversal() {
+            return preOrderTraversal(root, new List<int>());
+        }
+        public List<int> inOrderTraversal() {
+            return inOrderTraversal(root, new List<int>());
+        }
+        public List<int> postOrderTraversal() {
+            return postOrderTraversal(root, new List<int>());
+        }
+        public List<int> preOrderTraversal(TreeNode t, List<int> data) {
+            if (t == null)
+                return data;
+            data.Add(t.value);
+            preOrderTraversal(t.left, data);
+            preOrderTraversal(t.right, data);
+            return data;
+        }
+
+        public List<int> inOrderTraversal(TreeNode t, List<int> data) {
+            if (t == null)
+                return data;
+            inOrderTraversal(t.left, data);
+            data.Add(t.value);
+            inOrderTraversal(t.right, data);
+            return data;
+        }
+
+        public List<int> postOrderTraversal(TreeNode t, List<int> data) {
+            if (t == null)
+                return data;
+            postOrderTraversal(t.left, data);
+            postOrderTraversal(t.right, data);
+            data.Add(t.value);            
+            return data;
+        }
+
+        public TreeNode searchTree(int val) {
+            if (root == null)
+                return null;
+            return searchTree(root, val);
+        }
+        public TreeNode delete(int value) {            
+            return delete(root, value);
+        }
+        private TreeNode delete(TreeNode tree, int value) {
+            if (tree == null)
+                return null;
+            if(tree.value == value) {
+                if (tree.left != null && tree.right != null) {
+                    var reshapedNode = getLeastLeaf(tree.right, value);
+                    tree.setValue(reshapedNode.val);
+                    tree.right = reshapedNode.nodes;
+                    tree.right = delete(tree.right, value);
+                } else if(tree.right != null) {
+                    return tree.right;
+                } else {
+                    return tree.left;
+                }
+            } else {
+                if(tree.value > value) {
+                    tree.left = delete(tree.left, value);
+                } else {
+                    tree.right = delete(tree.right, value);
+                }
+            }
+            return tree;
+        }
+        private (TreeNode nodes, int val) getLeastLeaf(TreeNode node, int valueToDelete) {
+            if(node.left == null) {
+                int originalValue = node.value;
+                node.setValue(valueToDelete);
+                return (node, originalValue);
+            }
+            var result = getLeastLeaf(node.left, valueToDelete);
+            node.left = result.nodes;
+            return (node, result.val);
+        }
+        private TreeNode searchTree(TreeNode tree, int val) {
+            if (tree == null)
+                return null;
+            if (tree.value == val)
+                return tree;
+            if (tree.value > val) {
+                return searchTree(tree.left, val);
+            } else {
+                return searchTree(tree.right, val);
+            }            
+        }
+        public TreeNode getTree() {
+            return root;
         }
         public class TreeNode {
             public TreeNode left { get; set; }
             public TreeNode right { get; set; }
-            public int value { get; set; }
-            public int depth { get; set; } = 0;
+            public int value { get; private set; }
+            public TreeNode(int value) {
+                this.value = value;
+            }
+            public void setValue(int value) {
+                this.value = value;
+            }
         }
     }
+
 }
