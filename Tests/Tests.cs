@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static HackerRankSolutionRepo.Problems.BinaryTreeProblem;
-
 namespace Tests {
     [TestFixture]
     public class Tests {
@@ -126,28 +124,52 @@ namespace Tests {
             var r = Activities.IntToRoman(21);
             Assert.AreEqual("XXI", r);
         }
+
         [TestCase]
-        public void TestTreeDepth() {            
-            TreeNode node = new TreeNode();
-            node.value = 1;
-            node.depth = 1;
-            node = fillTree(node, 16);
-            int d = BinaryTreeProblem.findMaxDepth(node);
-            Assert.AreEqual(d, 4);
-        }
-        public static TreeNode fillTree(TreeNode tree, int maxValue) {
-            int rightVal = (tree.value + tree.value);
-            int leftVal = rightVal + 1;
-            if (rightVal > maxValue)
-                return tree;
-            tree.right = new TreeNode { value = rightVal };
-            tree.right = fillTree(tree.right, maxValue);
-            if (leftVal <= maxValue) {
-                tree.left = new TreeNode { value = leftVal };
-                tree.left = fillTree(tree.left, maxValue);
+        public void TestBinTree() {
+            var r = new BSTImpl();
+            int[] a = new int[] { 45, 15, 79, 90, 10, 55, 12, 20, 50 };
+            foreach(int i in a) {
+                r.insert(i);
             }
-            return tree;
+            var tree = r.getTree();
+            var treeFor45 = r.searchTree(45);
+            var treeFor12 = r.searchTree(12);
+            var treeFor50 = r.searchTree(50);
+            var treeFor55 = r.searchTree(55);
+            var treeFor404 = r.searchTree(404);
+            Assert.AreEqual(treeFor45.value, 45);
+            Assert.AreEqual(treeFor12.value, 12);
+            Assert.AreEqual(treeFor50.value, 50);
+            Assert.AreEqual(treeFor55.value, 55);
+            Assert.AreEqual(treeFor404, null);
         }
+
+        [TestCase]
+        public void TestBinTreeII() {
+            var r = new BSTImpl();
+            int[] a = new int[] { 45, 15, 79, 90, 10, 55, 12, 20, 50 };
+            foreach (int i in a) {
+                r.insert(i);
+            }
+            var tree = r.getTree();
+            var ntree = r.delete(10);
+            var ntree2 = r.delete(55);
+            var ntree3 = r.delete(45);
+        }
+        [TestCase]
+        public void TestBinTreeIII() {
+            var r = new BSTImpl();
+            int[] a = new int[] { 90, 50, 150, 20, 75, 95, 175, 5, 25, 66, 80, 92, 111, 166, 200 };
+            foreach (int i in a) {
+                r.insert(i);
+            }
+            var tree = r.getTree();
+            var tr = r.preOrderTraversal();
+            var tr2 = r.inOrderTraversal();
+            var tr3 = r.postOrderTraversal();
+        }
+
         [TestCase]
         public void dayweekendTest() {
             var r = Activities.weekend("29-02");
@@ -199,12 +221,49 @@ namespace Tests {
             int[] h = new int[] { 1, 2, 3, 5, 6, 7, 8, 9 };
             var k = SortingAlgorithms.QuickSort(h, 0, 7);
         }
+
         [TestCase]
         public void TestQSII() {
             int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
             var k = SortingAlgorithms.QuickSort(h, 0, 7);
             Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
         }
+
+        [TestCase]
+        public void TestIS() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.InsertSort(h);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
+        [TestCase]
+        public void TestSS() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.SelectionSort(h);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
+        [TestCase]
+        public void TestBS() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.BubbleSort(h);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
+        [TestCase]
+        public void TestHS() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.HeapSort(h);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
+        [TestCase]
+        public void TestMSM() {
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            var k = SortingAlgorithms.MergeSort(h, 7, 0);
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
         public class Employee {
             public string FirstName { get; set; }
             public string LastName { get; set; }
