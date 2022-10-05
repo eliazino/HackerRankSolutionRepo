@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static HackerRankSolutionRepo.Problems.BSTImpl;
+
 namespace Tests {
     [TestFixture]
     public class Tests {
@@ -152,11 +154,9 @@ namespace Tests {
             foreach (int i in a) {
                 r.insert(i);
             }
-            var tree = r.getTree();
-            var ntree = r.delete(10);
-            var ntree2 = r.delete(55);
-            var ntree3 = r.delete(45);
+            long j = r.getHeight();
         }
+
         [TestCase]
         public void TestBinTreeIII() {
             var r = new BSTImpl();
@@ -164,10 +164,32 @@ namespace Tests {
             foreach (int i in a) {
                 r.insert(i);
             }
+            bool tibin = r.treeIsABinaryTree();
             var tree = r.getTree();
+            var levels = r.getLevel();
             var tr = r.preOrderTraversal();
             var tr2 = r.inOrderTraversal();
             var tr3 = r.postOrderTraversal();
+        }
+
+        [TestCase]
+        public void TestBinTreeIV() {
+            var r = new BSTImpl();
+            TreeNode node = new TreeNode(100);
+            node.left = new TreeNode(50);
+            node.right = new TreeNode(200);
+            node.left.left = new TreeNode(25);
+            node.left.right = new TreeNode(75);
+            node.right.left = new TreeNode(90);
+            node.right.right = new TreeNode(350);
+            bool tibin = r.treeIsABinaryTree(node);
+        }
+
+        [TestCase]
+        public void TestBinTreeV() {
+            var t = OtherSolution.countSolution(new int[] { 1, 2, 5 }, 3, 7);
+            var t2 = OtherSolution.coinChangeProblemII(new int[] { 1, 2, 5 }, 12);
+            var t3 = OtherSolution.stairsSolution(6, null);
         }
 
         [TestCase]
@@ -218,8 +240,8 @@ namespace Tests {
 
         [TestCase]
         public void TestQS() {
-            int[] h = new int[] { 1, 2, 3, 5, 6, 7, 8, 9 };
-            var k = SortingAlgorithms.QuickSort(h, 0, 7);
+            int[] h = new int[] { 10, 80, 30, 90, 40, 50, 70 };
+            var k = SortingAlgorithms.QuickSort(h, 0, 6);
         }
 
         [TestCase]
@@ -262,6 +284,37 @@ namespace Tests {
             int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
             var k = SortingAlgorithms.MergeSort(h, 7, 0);
             Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+        }
+
+        [TestCase]
+        public void TestSeq() {
+            int[] i = new int[] {5, 8, 3, 1, 2, 9, 7, 4 };
+            int missing = OtherSolution.findMissingNumberInSequentialArray(i, 9);
+            bool summy = OtherSolution.findSuminArray(i, 3);
+            bool nosummy = OtherSolution.findSuminArray(i, 30);
+            Assert.AreEqual(missing, 6);
+            Assert.AreEqual(summy, true);
+            Assert.AreEqual(nosummy, false);
+        }
+
+        [TestCase]
+        public void TestSeqLink() {
+            LinkedList<int> a = new LinkedList<int>();            
+            LinkedList<int> b = new LinkedList<int>();
+            a.AddLast(1);
+            b.AddLast(2);
+            b.AddLast(3);
+            a.AddLast(4);
+            b.AddLast(5);
+            a.AddLast(5);
+            a.AddLast(6);
+            b.AddLast(6);
+            a.AddLast(7);
+            b.AddLast(8);
+            a.AddLast(9);
+            b.AddLast(9);
+            a.AddLast(10);
+            var t = OtherSolution.linkLists(a, b);
         }
 
         public class Employee {

@@ -63,6 +63,17 @@ namespace HackerRankSolutionRepo.Problems {
                 return null;
             return searchTree(root, val);
         }
+        private TreeNode searchTree(TreeNode tree, int val) {
+            if (tree == null)
+                return null;
+            if (tree.value == val)
+                return tree;
+            if (tree.value > val) {
+                return searchTree(tree.left, val);
+            } else {
+                return searchTree(tree.right, val);
+            }
+        }
         public TreeNode delete(int value) {            
             return delete(root, value);
         }
@@ -99,19 +110,51 @@ namespace HackerRankSolutionRepo.Problems {
             node.left = result.nodes;
             return (node, result.val);
         }
-        private TreeNode searchTree(TreeNode tree, int val) {
-            if (tree == null)
-                return null;
-            if (tree.value == val)
-                return tree;
-            if (tree.value > val) {
-                return searchTree(tree.left, val);
-            } else {
-                return searchTree(tree.right, val);
-            }            
-        }
+        
         public TreeNode getTree() {
             return root;
+        }
+        public long getHeight() {
+            if (root == null)
+                return 0;
+            return getHeight(this.root);
+        }
+        public Dictionary<int, List<int>> getLevel() {
+            long height = getHeight();
+            var result = new Dictionary<int, List<int>>();
+            for(int i = 1; i <= height; i++) {
+                result.Add(i, getLevel(root, i, new List<int>()));
+            }
+            return result;
+        }
+        private List<int> getLevel(TreeNode node, long level, List<int> levelMembers) {
+            if (node == null)
+                return levelMembers;
+            if(level == 1) {
+                levelMembers.Add(node.value);
+            }
+            getLevel(node.left, level -1, levelMembers);
+            getLevel(node.right, level -1, levelMembers);
+            return levelMembers;
+        }
+        public long getHeight(TreeNode node) {
+            if (node == null)
+                return 0;
+            long rlen = getHeight(node.right);
+            long llen = getHeight(node.left);
+            if (rlen > llen)
+                return rlen + 1;
+            return llen + 1;
+        }
+        public bool treeIsABinaryTree(TreeNode t, int minValue = int.MinValue, int maxValue = int.MaxValue) {
+            if (t == null)
+                return true;
+            if (t.value < minValue || t.value > maxValue)
+                return false;
+            return (treeIsABinaryTree(t.left, minValue, t.value - 1) && treeIsABinaryTree(t.right, t.value + 1, maxValue));
+        }
+        public bool treeIsABinaryTree() {
+            return treeIsABinaryTree(root);
         }
         public class TreeNode {
             public TreeNode left { get; set; }
