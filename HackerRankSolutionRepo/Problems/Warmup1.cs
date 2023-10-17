@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace HackerRankSolutionRepo.Problems {
-    public class Warmup1 {
+    public static class Warmup1 {
         public static void plusMinus(List<int> arr) {
             int length = arr.Count;
             int positives = arr.FindAll(F => F > 0).Count;
@@ -229,6 +229,142 @@ namespace HackerRankSolutionRepo.Problems {
                 }
             }
             return 1;
+        }
+
+        public static string palindromeChecker(string s, List<int> startIndex, List<int> endIndex, List<int> subs) {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < startIndex.Count; i++) {
+                string substr = s.Substring(startIndex[i], endIndex[i] + 1 - startIndex[i]);
+                var r = isPalindrome(substr, subs[i]);
+                result.Append(r ? "1" : "0");
+            }
+            return result.ToString();
+        }
+
+        public static List<bool> CanMakePaliQueries(string s, int[][] query) {
+            List<bool> d = new List<bool>();
+            for (int i = 0; i < query.Length; i++) {
+                int startIndex = query[i][0];
+                int endIndex = query[i][1];
+                int sub = query[i][2];
+                string substr = s.Substring(startIndex, endIndex + 1 - startIndex);
+                d.Add(isPalindrome(substr, sub));
+            }
+            return d;
+        }
+
+        public static bool isPalindrome(string str, int numReplacement) {
+            int left = 0, right = str.Length-1;
+            int checks = 0;
+            int totalOdds = 0;
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+            for(int i = 0; i < str.Length; i++) {
+                if (left == right || checks == str.Length)
+                    break;
+                if(!dic.ContainsKey(str[left])){
+                    totalOdds++;
+                    dic.Add(str[left], 1);                    
+                } else {
+                    dic[str[left]]++;                    
+                    if (dic[str[left]] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }                    
+                }
+                if (!dic.ContainsKey(str[right])) {
+                    totalOdds++;
+                    dic.Add(str[right], 1);                    
+                } else {
+                    dic[str[right]]++;                    
+                    if (dic[str[right]] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }
+                }
+                left++;
+                right--;
+                checks++;
+            }
+            if (str.Length % 2 > 0) {
+                char c = str[(int)Math.Floor((double)(str.Length / 2))];
+                if (!dic.ContainsKey(c)) {
+                    totalOdds++;
+                    dic.Add(c, 1);                    
+                } else {
+                    dic[c]++;                    
+                    if (dic[c] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }
+                }
+            }
+            int r = str.Length % 2 > 0 ? 1 : 0;
+            totalOdds -= r;
+            if (totalOdds == 0)
+                return true;
+            if (totalOdds / 2 > numReplacement)
+                return false;
+            return true;
+        }
+
+        public static bool isPalindromeV2(string str, int numReplacement) {
+            int left = 0, right = str.Length - 1;
+            int checks = 0;
+            int totalOdds = 0;
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+            for (int i = 0; i < str.Length; i++) {
+                if (left == right || checks == str.Length)
+                    break;
+                if (!dic.ContainsKey(str[left])) {
+                    totalOdds++;
+                    dic.Add(str[left], 1);
+                } else {
+                    dic[str[left]]++;
+                    if (dic[str[left]] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }
+                }
+                if (!dic.ContainsKey(str[right])) {
+                    totalOdds++;
+                    dic.Add(str[right], 1);
+                } else {
+                    dic[str[right]]++;
+                    if (dic[str[right]] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }
+                }
+                left++;
+                right--;
+                checks++;
+            }
+            if (str.Length % 2 > 0) {
+                char c = str[(int)Math.Floor((double)(str.Length / 2))];
+                if (!dic.ContainsKey(c)) {
+                    totalOdds++;
+                    dic.Add(c, 1);
+                } else {
+                    dic[c]++;
+                    if (dic[c] % 2 == 0) {
+                        totalOdds--;
+                    } else {
+                        totalOdds++;
+                    }
+                }
+            }
+            int r = str.Length % 2 > 0 ? 1 : 0;
+            totalOdds -= r;
+            if (totalOdds == 0)
+                return true;
+            if (totalOdds / 2 > numReplacement)
+                return false;
+            return true;
         }
 
     }

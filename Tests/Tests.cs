@@ -316,7 +316,18 @@ namespace Tests {
             a.AddLast(10);
             var t = OtherSolution.linkLists(a, b);
         }
+        [TestCase]
+        public void Palindrome() {
+            var ans = Warmup1.palindromeChecker("cdecd", new List<int> { 0, 0, 0, 0}, new List<int> { 0, 1, 2, 3 }, new List<int> { 0, 1, 1, 0 });            
+            Assert.AreEqual(ans, "1110");
+            var t = new int[][] { new int[] { 3, 3, 0 }, new int[] { 1, 2, 0 }, new int[] { 0, 3, 1 }, new int[] { 0, 3, 2 }, new int[] { 0, 4, 1 } };
+            var ans2 = Warmup1.CanMakePaliQueries("abcda", t);
+            Assert.AreEqual(ans2, new List<bool> { true, false, false, true, true });
+            t = new int[][] { new int[] { 0, 3, 1 } };
+            ans2 = Warmup1.CanMakePaliQueries("hunu", t);
+            Assert.AreEqual(ans2, new List<bool> { true });
 
+        }
         public class Employee {
             public string FirstName { get; set; }
             public string LastName { get; set; }
