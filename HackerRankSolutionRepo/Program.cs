@@ -7,6 +7,11 @@ using System.Linq;
 namespace HackerRankSolutionRepo {
     class Program {
         static void Main(string[] args) {
+            Console.WriteLine(Warmup1.GCD(15, 7));
+            Console.WriteLine(Warmup1.isArmstrong(153));
+            Console.WriteLine(Warmup1.getDivisors(36));
+            Warmup1.RecursiveCounter(10);
+            Warmup1.reverseArray(new int[] { 6, 5, 4, 3, 2, 1 });
             //TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
             /*string[] firstMultipleInput = Console.ReadLine().TrimEnd().Split(' ');
             int n = Convert.ToInt32(firstMultipleInput[0]);

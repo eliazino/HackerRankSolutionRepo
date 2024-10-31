@@ -366,7 +366,85 @@ namespace HackerRankSolutionRepo.Problems {
                 return false;
             return true;
         }
+        public static bool isArmstrong(int number) {
+            int original = number;
+            var len = (int)Math.Log10(number) + 1;
+            double sum = 0;
+            for(int i=0; i < len; i++) {
+                sum = sum + Math.Pow(number % 10, len);
+                number = (int)(number / 10);
+            }
+            return sum == original;
+        }
 
+        public static int[] getDivisors(int number) {
+            List<int> divs = new List<int>();
+            int i = 1;
+            for(i =1; i < number; i++) {
+                if (divs.Contains(i))
+                    break;
+                if(number%i == 0) {
+                    int div = number / i;
+                    divs.Add(i);
+                    divs.Add(div);                    
+                    if(i == div) {
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine($"Maximum is {i}");
+            return divs.ToArray();
+        }
+
+        public static int[] reverseArray(int[] rar) {
+            int len = rar.Length;
+            int midPoint = len / 2;            
+            for (int i=0; i < rar.Length; i++) {
+                int opposite = len - 1 - i;                
+                int np = rar[opposite];
+                rar[opposite] = rar[i];
+                rar[i] = np;
+                if (opposite == i || opposite - i == 0)
+                    break;
+            }
+            return rar;
+        }
+
+        public static List<int> Fibonacci(int max, List<int> fibs) {
+            if (max == 0)
+                return new List<int> { 0 };
+            if (max == 1) {
+                fibs.Add(1);
+                fibs.Add(1);
+                return fibs;
+            }
+            max = max - 1;
+            var fibArray = Fibonacci(max, fibs);
+            fibs.AddRange(fibArray);
+            return fibs;
+        }
+
+        public static void RecursiveCounter(int number) {
+            if (number < 1)
+                return;
+            number = number - 1;
+            
+            Console.WriteLine($"The Number is {number}");
+            RecursiveCounter(number);
+        }
+
+        public static int GCD (int a, int b){
+            while (true) {
+                if (a == 0)
+                    return b;
+                if (b == 0)
+                    return a;
+                if(a > b) {
+                    a = a - b;
+                } else {
+                    b = b - a;
+                }
+            }
+        }
     }
-
 }
