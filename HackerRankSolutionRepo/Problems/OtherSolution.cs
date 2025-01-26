@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 
 namespace HackerRankSolutionRepo.Problems {
@@ -130,6 +132,101 @@ namespace HackerRankSolutionRepo.Problems {
                 }
             }
             return arrs[sum];
+        }
+
+        public static (int largest, int second) SecondLargest(int[] arrs) {
+            int l = 0;
+            int s = 0;
+            for(int i=0; i < arrs.Length; i++) {
+                if (arrs[i] > l) {
+                    s = l;
+                    l = arrs[i];                    
+                }
+            }
+            return (l, s);
+        }
+
+        public static bool ArraySoted(int[] arrs) {
+            for (int i = 0; i < arrs.Length-1; i++) {
+                if (arrs[i] > arrs[i + 1])
+                    return false;
+            }
+            return true;
+        }
+
+        public static int[] UnionArray(int[] arr1, int[] arr2) {
+            int lai = 0;
+            int rai = 0;
+            int lastInsert = -1;
+            int maxArr = arr1.Length; maxArr = arr2.Length > maxArr ? arr2.Length : maxArr;
+            HashSet<int> fa = new HashSet<int>();
+            while (true) {
+                bool onedown = lai > arr1.Length - 1;
+                bool twodown = rai > arr1.Length - 1;
+                if (onedown && twodown)
+                    break;
+                int l = -1, r = -1;
+                if (!onedown) {
+                    l = arr1[lai];
+                }
+                if (!twodown) {
+                    r = arr1[rai];
+                }
+                if (l == r) {
+                    fa.Add(l);
+                    lastInsert = l;
+                }
+                if (l == -1) {
+                    fa.Add(r);
+                } else if (r == -1) {
+                    fa.Add(l);
+                } else {
+                    if (l > r) {
+                        fa.Add(r);
+                        fa.Add(l);
+                    } else if(r>l) {
+                        fa.Add(l);
+                        fa.Add(r);
+                    }
+                }
+                lai++; rai++;
+            }
+            return  fa.ToArray();
+        }
+
+        public static int LengthOfMaxSubstring(string str) {
+            int l, r;
+            l = r = 0;
+            int max = 0;
+            Dictionary<char, int> indices = new Dictionary<char, int>();
+            while(r < str.Length) {
+                char c = str[r];
+                if (indices.ContainsKey(c)) {
+                    l = Math.Max(indices[c]+1, l);                    
+                }
+                indices[c] = r;
+                max = Math.Max(max, r - l + 1);
+                r++;
+            }
+            return max;
+        }
+
+        public static int GreedyAlgorithm(int[] child, int[] cookie) {
+            Array.Sort(child);
+            Array.Sort(cookie);
+            int nextChild, nextCookie;
+            nextChild = nextCookie = 1;
+            while(true) {
+                if (nextChild >= child.Length || nextCookie >= cookie.Length)
+                    break;
+                if (child[nextChild] <= cookie[nextCookie]) {
+                    nextChild++;
+                    nextCookie++;
+                } else {
+                    nextCookie++;
+                }
+            }
+            return nextChild;
         }
     }
 }

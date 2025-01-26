@@ -253,9 +253,9 @@ namespace Tests {
 
         [TestCase]
         public void TestIS() {
-            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1 };
+            int[] h = new int[] { 2, 9, 5, 3, 7, 4, 7, 1, 6 };
             var k = SortingAlgorithms.InsertSort(h);
-            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5, 7, 7, 9 });
+            Assert.AreEqual(k, new int[] { 1, 2, 3, 4, 5,6, 7, 7, 9 });
         }
 
         [TestCase]
@@ -328,6 +328,63 @@ namespace Tests {
             Assert.AreEqual(ans2, new List<bool> { true });
 
         }
+
+        [TestCase]
+        public void LnSlInArray() {
+            var aar = new int[] { 4, 8, 92, 4, 5, 1, 100, 3, 46, 25 };
+            var v = OtherSolution.SecondLargest(aar);
+            Assert.AreEqual(100, v.largest);
+            Assert.AreEqual(92, v.second);
+        }
+
+        [TestCase]
+        public void ArraySorted() {
+            var aar = new int[] { 4, 8, 92, 4, 5, 1, 100, 3, 46, 25 };
+            var v = OtherSolution.ArraySoted(aar);
+            Assert.AreEqual(false, v);
+            aar = new int[] { 1, 5, 6, 9, 10, 11, 22, 56 };
+            v = OtherSolution.ArraySoted(aar);
+            Assert.AreEqual(true, v);
+        }
+
+        [TestCase]
+        public void ArrayUnion() {
+            var aar = new int[] { 1, 2, 3, 4, 5 };
+            var aar2 = new int[] { 2, 3, 4, 4, 5 };
+            var v = OtherSolution.UnionArray(aar, aar2);
+            var naar = new int[] { 1, 2, 3, 4, 5 };
+            Assert.AreEqual(v, naar);
+
+            aar = new int[] { 1, 2, 4, 5 };
+            aar2 = new int[] { 3,3,3,3};
+            v = OtherSolution.UnionArray(aar, aar2);
+            naar = new int[] { 1, 2, 3, 4, 5 };
+            Assert.AreEqual(v, naar);
+        }
+
+
+        [TestCase]
+        public void LengthOfMaxSubstring() {
+            string j = "abcabcbb";
+            int m = OtherSolution.LengthOfMaxSubstring(j);
+            Assert.AreEqual(m, 3);
+            j = "takeUforward";
+            m = OtherSolution.LengthOfMaxSubstring(j);
+            Assert.AreEqual(m, 9);
+        }
+
+        [TestCase]
+        public void GreedyAlgorithm() {
+            int[] child = new int[] { 1, 2, 3};
+            int[] cookie = new int[] { 1, 1 };
+            int m = OtherSolution.GreedyAlgorithm(child, cookie);
+            Assert.AreEqual(m, 1);
+            child = new int[] { 1, 5, 3, 3, 4 };
+            cookie = new int[] { 4, 2, 1, 2, 1, 3 };
+            m = OtherSolution.GreedyAlgorithm(child, cookie);
+            Assert.AreEqual(m, 3);
+        }
+
         public class Employee {
             public string FirstName { get; set; }
             public string LastName { get; set; }

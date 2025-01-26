@@ -446,5 +446,18 @@ namespace HackerRankSolutionRepo.Problems {
                 }
             }
         }
+
+        public static int[] charFrquency(string str) {
+            int max = 122 - 65 + 1;
+            int[] result = new int[max];
+            foreach(char c in str) {
+                int cin = (int)c;
+                cin = cin - 65;
+                if (cin > max - 1)
+                    continue;
+                result[cin] += 1;
+            }
+            return result;
+        }
     }
 }
